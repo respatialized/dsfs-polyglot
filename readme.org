@@ -1,0 +1,5 @@
+* dsfs-polyglot
+** A polyglot approach to data science
+This book contains reproductions of the code samples from Joel Grus' book Data Science from Scratch in Python (the original language), Scala, and Clojure. A multi-language implementation will make the concepts stick better, as well as portray relevant distinctions between the languages if the code is written in an idiomatic way.
+* License
+This project is licensed under the Unlicense (just like the original code samples from the book), which means it is in the public domain.

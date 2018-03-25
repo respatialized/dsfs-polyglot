@@ -1,0 +1,13 @@
+* Chapter 1:
+
+#+begin_src scala 
+
+#+end_src
+
+#+begin_src ein
+
+#+end_src
+
+#+begin_src clojure
+
+#+end_src
