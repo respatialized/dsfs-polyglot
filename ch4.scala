@@ -1,12 +1,3 @@
-* Chapter 4: Linear Algebra
-
-** Vectors
-" Although you might not think of your data as vectors, they are a good way to represent numeric data."
-
-If you take Kalid Azad's advice and think of vectors as being the building blocks of a math for spreadsheets, it becomes much easier to think of your data this way.
-
-#+begin_src scala :tangle ch4.scala
-
 val heightWeightAge = Vector(70, // inches
                             170, // pounds
                             40) // years
@@ -48,16 +39,7 @@ val dotProduct = (v: Vector[Double], w: Vector[Double]) => {
   v.zip(w).map{vw: (Double, Double) => vw._1 * vw._2}.sum
 }
 
-#+end_src
-
-Kalid Azad has a great intuition for the dot product:
-
-#+DOWNLOADED: https://betterexplained.com/wp-content/uploads/dotproduct/dot_product_rotation.png @ 2018-04-07 12:09:09
-[[file:Chapter 4: Linear Algebra/dot_product_rotation_2018-04-07_12-09-09.png]]
-
-Rotate one vector to the baseline and then multiply the amount that they overlap along the baseline. Let's test this!
-
-#+begin_src scala :tangle ch4.scala
+print("\nob_scala_eol")
 
 val vectors = (Vector(3.0, 4.0), Vector(3.0, 4.0))
 val vectorsRotated = (Vector(5.0, 0.0), Vector(5.0, 0.0))
@@ -68,11 +50,7 @@ assert(
   dotProduct(vectorsRotated._1, vectorsRotated._2)
 )
 
-#+end_src
-
-The assertion passes, which means that the rotated and unrotated vectors extend the same length in the same direction.
-
-#+begin_src scala :tangle ch4.scala
+print("\nob_scala_eol")
 
 val sumOfSquares = (v: Vector[Double]) => {dotProduct(v,v)}
 val magnitude = (v: Vector[Double]) => {Math.sqrt(sumOfSquares(v))}
@@ -86,6 +64,4 @@ val distance = (v: Vector[Double], w: Vector[Double]) => {
   Math.sqrt(squaredDistance)
 }
 
-#+end_src 
-
-** Matrices
+print("\nob_scala_eol")
