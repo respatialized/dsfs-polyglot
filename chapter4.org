@@ -89,3 +89,56 @@ val distance = (v: Vector[Double], w: Vector[Double]) => {
 #+end_src 
 
 ** Matrices
+
+#+BEGIN_SRC scala :tangle ch4.scala
+
+val A = Vector(Vector(1.0, 2.0, 3.0), // 2 rows, 3 columns
+               Vector(4.0, 5.0, 6.0))
+
+val B = Vector(Vector(1.0, 2.0), // 3 rows, 2 columns
+               Vector(3.0, 4.0),
+               Vector(5.0, 6.0))
+
+#+END_SRC
+
+As in Python, zero-indexing means we use 0 to refer to the first row of the Matrix.
+
+#+BEGIN_SRC scala :tangle ch4.scala
+
+val shape = (A: Vector[Vector[Double]]) => {
+  val n = A.size
+  val k = A(0).size
+  (n, k)
+}
+
+#+END_SRC
+
+We use less verbose variable names here to keep the function names in line with mathematical terminology.
+
+#+BEGIN_SRC scala :tangle ch4.scala
+
+val getRow = (A: Vector[Vector[Double]], i: Int) => A(i)
+val getCol = (A: Vector[Vector[Double]], i: Int) => A.map(_(i))
+/* Returns a n x k matrix (nested Vectors) whose (i, j)th element is entryFunc(i, j)
+ */
+val makeMatrix = (n: Int, k: Int, entryFunc: (Int, Int) => Double) => {
+  val is = 0 until n
+  val js = 0 until k
+  is.map{i =>
+    js.map{j =>
+     entryFunc(i, j)
+       }.toVector
+  }.toVector
+}
+  
+val isDiagonal = (i: Int, j: Int) => if (i == j) 1.0 else 0.0
+
+}
+
+
+#+END_SRC
+
+Even though this is a trivial example, it's still pretty remarkable how much cruft higher-order functions cut out. Of course, what's trivial here becomes more and more important to keep concise as a program grows larger.
+
+
+

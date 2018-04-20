@@ -65,3 +65,41 @@ val distance = (v: Vector[Double], w: Vector[Double]) => {
 }
 
 print("\nob_scala_eol")
+
+val A = Vector(Vector(1.0, 2.0, 3.0), // 2 rows, 3 columns
+               Vector(4.0, 5.0, 6.0))
+
+val B = Vector(Vector(1.0, 2.0), // 3 rows, 2 columns
+               Vector(3.0, 4.0),
+               Vector(5.0, 6.0))
+
+print("\nob_scala_eol")
+
+val shape = (A: Vector[Vector[Double]]) => {
+  val n = A.size
+  val k = A(0).size
+  (n, k)
+}
+
+print("\nob_scala_eol")
+
+val getRow = (A: Vector[Vector[Double]], i: Int) => A(i)
+val getCol = (A: Vector[Vector[Double]], i: Int) => A.map(_(i))
+/* Returns a n x k matrix (nested Vectors) whose (i, j)th element is entryFunc(i, j)
+ */
+val makeMatrix = (n: Int, k: Int, entryFunc: (Int, Int) => Double) => {
+  val is = 0 until n
+  val js = 0 until k
+  is.map{i =>
+    js.map{j =>
+     entryFunc(i, j)
+       }.toVector
+  }.toVector
+}
+  
+val isDiagonal = (i: Int, j: Int) => if (i == j) 1.0 else 0.0
+
+}
+
+
+print("\nob_scala_eol")
