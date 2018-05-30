@@ -1,8 +1,18 @@
 * Chapter 1:
 
 #+begin_src scala 
+  val users: Array[Map[String, String]] = Array(
+    Map("id" -> "0", "name" -> "Hero"),
+  )
+
+  val friendships: Array[[String, String]] = Array(
+    (0,1), (0,2), (1,2)
+  )
+
 
 #+end_src
+
+Because scala is statically typed, you can't have a Map of mixed types: the values must all be the same type.
 
 #+begin_src ein
 
