@@ -1,0 +1,53 @@
+* Chapter 5: Statistics
+** 5.1 A single set of data
+#+BEGIN_SRC scala :tangle ch5.scala
+val numFriends = Vector(100, 49, 41, 40, 25 
+                        // and lots more
+                        )
+
+// function to return the histogram of the input Vector
+val counter = (x: Vector[Int]) => x.groupBy(identity).mapValues(_.size)
+
+val friendCounts = counter(numFriends)
+val numPoints = numFriends.size
+val sortedFriends = numFriends.sortBy(_ > _)
+
+val smallestValue = sortedFriends(0)
+val largestValue = sortedFriends(sortedFriends.size - 1)
+
+#+END_SRC
+** 5.2 Central tendencies
+
+#+BEGIN_SRC scala :tangle ch5.scala
+
+val mean = (d: Vector[Int]) => d.sum.toDouble/d.size
+
+val meanFriends = mean(numFriends)
+
+val median = (d: Vector[Int]) => {
+  val n = d.size
+  val sortedD = d.sortBy(_ > _)
+  n.mod(2) match {
+    case 0 {(sortedD(n) + sortedD(n-1))/2.0}
+    case 1 {sortedD(n)}
+  }
+}
+
+#+END_SRC
+
+Because of the definition of median, it doesn't lend itself well to that elegant functional style I hope for: it simply has two branching cases by definition.
+
+#+BEGIN_SRC scala :tangle ch5.scala
+
+val quantile(d: Vector[Int], p: Int) => {
+  val ix = p.*(d.size).toInt
+  d.sortBy(_ > _)(ix)
+}
+
+val mode(d: Vector[Int]) => {
+  val counted = d.groupBy(identity).mapValues(_.size)
+  val maxCount  = counted.maxBy(_._2)
+  counted.filter(_._2 == maxCount).map(_._1)
+}
+
+#+END_SRC
