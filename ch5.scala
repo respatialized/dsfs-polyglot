@@ -1,6 +1,3 @@
-* Chapter 5: Statistics
-** 5.1 A single set of data
-#+BEGIN_SRC scala :tangle ch5.scala
 val numFriends = Vector(100, 49, 41, 40, 25 
                         // and lots more
                         )
@@ -15,10 +12,7 @@ val sortedFriends = numFriends.sortBy(_ > _)
 val smallestValue = sortedFriends(0)
 val largestValue = sortedFriends(sortedFriends.size - 1)
 
-#+END_SRC
-** 5.2 Central tendencies
-
-#+BEGIN_SRC scala :tangle ch5.scala
+print("\nob_scala_eol")
 
 val mean = (d: Vector[Int]) => d.sum.toDouble/d.size
 
@@ -33,11 +27,7 @@ val median = (d: Vector[Int]) => {
   }
 }
 
-#+END_SRC
-
-Because of the definition of median, it doesn't lend itself well to that elegant functional style I hope for: it simply has two branching cases by definition.
-
-#+BEGIN_SRC scala :tangle ch5.scala
+print("\nob_scala_eol")
 
 val quantile(d: Vector[Int], p: Int) => {
   val ix = p.*(d.size).toInt
@@ -50,15 +40,13 @@ val mode(d: Vector[Int]) => {
   counted.filter(_._2 == maxCount).map(_._1)
 }
 
-#+END_SRC
-** 5.3 Dispersion
-#+BEGIN_SRC scala :tangle ch5.scala
+print("\nob_scala_eol")
+
 val dataRange = (x: Vector[Double]) => x.max - x.min
 
 //assert(dataRange(num_friends) == 99)
-#+END_SRC
-Grus says we should capture the intuition that a dataset of all 0s and 100s is more "spread out" than a dataset of all 50s except one 0 and one 100 using the /variance/. 
-#+BEGIN_SRC scala :tangle ch5.scala
+print("\nob_scala_eol")
+
 val deMean = (x: Vector[Double]) => {
   val meanVal = mean(x)
   return x.map(_ - meanVal)
@@ -74,4 +62,4 @@ val standardDeviation = (x: Vector[Double]) => Math.sqrt(variance(x))
 
 val interquartileRange = (x: Vector[Double]) => quantile(x, 0.75) - quantile(x, 0.25)
 //assert(interquartileRange(num_friends) == 6)
-#+END_SRC
+print("\nob_scala_eol")
