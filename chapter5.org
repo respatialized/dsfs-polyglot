@@ -75,3 +75,63 @@ val standardDeviation = (x: Vector[Double]) => Math.sqrt(variance(x))
 val interquartileRange = (x: Vector[Double]) => quantile(x, 0.75) - quantile(x, 0.25)
 //assert(interquartileRange(num_friends) == 6)
 #+END_SRC
+** 5.4 Correlation
+
+The first way we can measure the way two variables are associated with one another is through /covariance/.
+#+BEGIN_SRC scala
+
+val covariance = (x: Vector[Double], y: Vector[Double]) => {
+  val n = x.size
+  dotProduct(deMean(x), deMean(y)) / (n - 1)
+}
+
+#+END_SRC
+
+Intuitively, dot product works here because the dot product of two perpendicular vectors is negative, which when divided by the size of the vector yields a measure that's independent of the number of items in the vectors being compared.
+
+But because covariance yields a measure that is highly sensitive to the units of the inputs, it's harder to interpret, especially when comparing the covariance of multiple dimensions in a data set you're trying to evaluate. The example given in the book is "friend-minutes-per-day." How do you compare "friend-minutes-per-day" and something like "click-minutes-per-day," for example?
+
+Compounding that difficulty is the fact that covariance is also sensitive to the magnitude of variation:
+#+BEGIN_SRC scala
+val vec1 = Vector(-1.0, -0.5, 0.0, 0.5, 1.0)
+val vec2 = vec1.reverse
+val vec3 = vec1.map(_ * 2)
+
+covariance(vec1, vec1) < covariance(vec3, vec3)
+#+END_SRC
+Which means that vec3 above has a higher covariance with itself than vec1 does. This makes it hard to use covariance across different datasets.
+
+So instead we can use correlation.
+#+BEGIN_SRC scala
+val correlation = (x: Vector[Double], y: Vector[Double]) => {
+  val stdDevX = standardDeviation(x)
+  val stdDevY = standardDeviation(y)
+  if (stdDevX == 0 || stdDevY == 0) {0} // no variance, no correlation
+  else {covariance(x, y) / stdDevX / stdDevY}
+}
+#+END_SRC
+By dividing out the standard deviation (which is the square root of the variance), we end up with a unitless number between -1 and 1 representing the degree to which the datasets vary from their means in tandem.
+
+Why does it work? Initial thoughts:
+1. First you get two datasets that have positive values for the top of their range of values, and negative values for the bottom of their range by subtracting the mean from the data.
+2. Then, you get the total magnitude of the variation from 0 in the paired datasets by taking the dot product. This reduces individual positive and negative values to a single positive or negative value, representing the overall positive or negative direction that the two datasets vary in. The dot product is zero exactly when every positive point pair's product cancels out every negative point pair's product, leaving a sum of zero.
+3. You start to normalize this value to the size of the dataset by dividing it by n-1, where n is the number of data points, leaving the "average" in-tandem variation across all the data.
+4. But this value still contains, in a way, the range of variation within each variable. By taking the square root of the sum of squares of each variable, we get the measure of variation within each variable (NB - the sum of squares is the data's dot product with itself). Dividing the "average" dot product by this cancels out the range of variation, leaving us only with a value between -1 and 1. 
+5. It works because we're dividing by two square roots rather than two "averages" - the roots of each dimension cancel out the additional dimensions added by taking the dot product of the two datasets.
+
+Could we rewrite our correlation function more simply and get a similar result? Let's try it:
+#+BEGIN_SRC scala
+val correlation2 = (x: Vector[Double], y: Vector[Double]) => {
+  val xyProduct = dotProduct(deMean(x), deMean(y))
+  val xProduct = sumOfSquares(deMean(x))
+  val yProduct = sumOfSquares(deMean(y))
+  xyProduct / Math.sqrt(xProduct) / Math.sqrt(yProduct)
+}
+
+assert(correlation2(Vector(1,2,3), Vector(4,5,6)) == correlation(Vector(1,2,3), Vector(4,5,6)))
+#+END_SRC
+This skips the additional divide by n-1 step that we need to get variance and standard deviation, but it doesn't work because it will fail on variables that are all 0, and it produces perfect correlation between ~Vector(1,1,1)~ and ~Vector(1,1,1)~, "variables" with no variation at all!
+
+Bottom line: understanding dispersion is a necessary step to understanding correlation, both intuitively and for these implementations of the formulae.
+**  5.5 Simpson's Paradox
+
