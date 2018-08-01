@@ -134,4 +134,13 @@ This skips the additional divide by n-1 step that we need to get variance and st
 
 Bottom line: understanding dispersion is a necessary step to understanding correlation, both intuitively and for these implementations of the formulae.
 **  5.5 Simpson's Paradox
+Simpson's paradox, simply stated, is when the tendencies exhibited by different subsets of the data contradict the overall tendencies within the data. The example given in the text is the activity of users when broken out by region compared with the overall activity of users.
 
+No new methods or functions are described, but it's brought up to illustrate an important point about correlation:
+#+BEGIN_QUOTE
+The key issue is that correlation is measuring the relationship between your two variables /all else being equal/.
+#+END_QUOTE
+
+In order to account for this, you have to look at the crosstabs after identifying lurking variables that might be affecting the outcome.
+** 5.6 Some Other Correlational Caveats
+In as few words as possible: correlation can be limited by the fact that it is /unitless/ and /linear/. The former matters because strong correlations can be found in extremely small effect sizes; the latter matters because variables often have non-linear relationships.
