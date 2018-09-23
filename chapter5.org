@@ -144,3 +144,5 @@ The key issue is that correlation is measuring the relationship between your two
 In order to account for this, you have to look at the crosstabs after identifying lurking variables that might be affecting the outcome.
 ** 5.6 Some Other Correlational Caveats
 In as few words as possible: correlation can be limited by the fact that it is /unitless/ and /linear/. The former matters because strong correlations can be found in extremely small effect sizes; the latter matters because variables often have non-linear relationships.
+** 5.7 Correlation and Causation 
+Correlation may suggest causation, but it does not entail causation. The gold standard for establishing causation is a randomized controlled trial: assign users at random to a control and an experimental group, then showing a particular stimulus to that experimental group and observing whether that group differs from the control in a systematic way.
